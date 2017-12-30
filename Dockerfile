@@ -1,13 +1,12 @@
-FROM buildpack-deps:jessie-curl
+FROM buildpack-deps:stretch-curl
 MAINTAINER Justifiably <justifiably@ymail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ARG http_proxy
 
-RUN echo "deb http://www.deb-multimedia.org jessie main non-free" | tee -a /etc/apt/sources.list && \
-    apt-get update && apt-get install -y --force-yes deb-multimedia-keyring && \
-    apt-get upgrade -y --force-yes && \
-    apt-get install -y --force-yes \
+RUN echo "deb http://www.deb-multimedia.org stretch main non-free" | tee -a /etc/apt/sources.list && \
+    apt-get update && apt-get install -y --allow-unauthenticated deb-multimedia-keyring && \
+    apt-get install -y --allow-unauthenticated \
     perl \
     libcrypt-openssl-rsa-perl libio-socket-inet6-perl libwww-perl libio-socket-ssl-perl \
     locales \
@@ -19,13 +18,15 @@ RUN echo "deb http://www.deb-multimedia.org jessie main non-free" | tee -a /etc/
     ffmpeg \
     wavpack \
     --no-install-recommends && \
+    apt-get upgrade -y --allow-unauthenticated && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Use a nightly release, can be updated in place without rebuilding image
-# ARG LMSDEB=http://downloads.slimdevices.com/nightly/7.9/sc/52be1b6/logitechmediaserver_7.9.0~1485445004_all.deb
 # 7.9.0 final release, 8th Mar 2017.
+# Pass in LMSDEB to override
 ARG LMSDEB=http://downloads.slimdevices.com/LogitechMediaServer_v7.9.0/logitechmediaserver_7.9.0_all.deb
+
 RUN curl -o /tmp/lms.deb $LMSDEB && \
     dpkg -i /tmp/lms.deb && \
     rm -f  /tmp/lms.deb
