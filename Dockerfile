@@ -1,5 +1,4 @@
 FROM buildpack-deps:stretch-curl
-MAINTAINER Justifiably <justifiably@ymail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ARG http_proxy
@@ -22,10 +21,11 @@ RUN echo "deb http://www.deb-multimedia.org stretch main non-free" | tee -a /etc
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Use a nightly release, can be updated in place without rebuilding image
 # 7.9.0 final release, 8th Mar 2017.
-# Pass in LMSDEB to override
-ARG LMSDEB=http://downloads.slimdevices.com/LogitechMediaServer_v7.9.0/logitechmediaserver_7.9.0_all.deb
+# http://downloads.slimdevices.com/LogitechMediaServer_v7.9.0/logitechmediaserver_7.9.0_all.deb
+# 7.9.1 final release, 19th Apr 2018.
+# Pass in LMSDEB to override. Using a nightly release, can be updated in place without rebuilding image.
+ARG LMSDEB=http://downloads.slimdevices.com/LogitechMediaServer_v7.9.1/logitechmediaserver_7.9.1_all.deb
 
 RUN curl -o /tmp/lms.deb $LMSDEB && \
     dpkg -i /tmp/lms.deb && \
