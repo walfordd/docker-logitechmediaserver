@@ -1,5 +1,5 @@
 SH=/bin/bash
-TAG=$(shell cat lmsdeb.txt | sed 's/.*_\([0-9\.~]*\)_all.deb/\1/')
+TAG=$(shell cat lmsdeb.txt | sed 's/.*_\([0-9\.~]*\)_all.deb/\1/' | sed 's/~/-/')
 USER=justifiably
 
 build: 
