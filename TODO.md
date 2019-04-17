@@ -1,2 +1,1 @@
-- See if Shairport2(fork) can be got working (with net host, dynamically allocates ports)
 - Sort out tagging so goes through to images
