@@ -27,7 +27,8 @@ RUN echo "deb http://www.deb-multimedia.org stretch main non-free" | tee -a /etc
 # Pass in LMSDEB to override. Using a nightly release, can be updated in place without rebuilding image.
 ARG LMSDEB=http://downloads.slimdevices.com/LogitechMediaServer_v7.9.1/logitechmediaserver_7.9.1_all.deb
 
-RUN curl -o /tmp/lms.deb $LMSDEB && \
+RUN LMSDEB=wget -O - -q "http://www.mysqueezebox.com/update/?version=7.9.2&revision=1&geturl=1&os=deb
+    curl -o /tmp/lms.deb $LMSDEB && \
     dpkg -i /tmp/lms.deb && \
     rm -f  /tmp/lms.deb
 
